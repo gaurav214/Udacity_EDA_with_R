@@ -20,6 +20,11 @@ library(gridExtra)
 library(grid)
 library(lattice)
 library(xtable)
+library(rpart)
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+library(caret)
 ```
 
 
@@ -383,6 +388,56 @@ Positive relationship :
 Negative relationship :
   alcohol~density <- -0.78
   
+#Statistical model:
+
+Decision tree seems to be best choice for this dataset. In this model we will keep rating
+as our dependent variable and rest of the features are independent variable.
+
+1. Restructuring the dataset for model.
+
+```{r echo = TRUE, fig.height = 14, fig.width = 5}
+ww1 <- ww[-13]
+ww1$quality <- NULL
+
+names(ww1)
+```
+
+
+2. Dividing the dataset using createDataPartition to insure stratification.
+
+```{r echo = TRUE, fig.height = 14, fig.width = 5}
+train.index <- createDataPartition(ww1$rating, p = .7, list = FALSE)
+train <- ww1[ train.index,]
+test  <- ww1[-train.index,]
+```
+
+3. Building the decision tree model
+
+```{r echo = TRUE, fig.height = 5, fig.width = 5}
+my_model <- rpart(rating~., data = train, method = "class")
+
+fancyRpartPlot(my_model)
+```
+
+4. Testing the mode:
+
+```{r echo = TRUE, fig.height = 14, fig.width = 5}
+pred_rating <- predict(my_model, newdata = test, type = 'class')
+table(pred_rating, test$rating)
+```
+
+5. Making ConfusionMAtrix to check statistics of our model:
+
+```{r echo = TRUE, fig.height = 14, fig.width = 5}
+confusionMatrix(table(pred_rating, test$rating))
+```
+
+#Model Analysis:
+
+Model have 0 probability for Bad wine class, but it was expected since we have very low
+observations of Bad wines which is making the dataset very unbalanced and biased towards average wines.
+
+Our model accuracy is 77.18%, and its considering alcohol to be the most significant factor in detrmining the rating of wines.
 
 # Multivariate Plots Section
 
