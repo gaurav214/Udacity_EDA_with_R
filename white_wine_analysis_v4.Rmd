@@ -371,13 +371,13 @@ There is a positive trend with high correlation of 0.65. As the concentration of
 
 
 
-#Bivariate Analysis:
+# Bivariate Analysis:
 
-###Talk about some of the relationships you observed in this part of the investigation.
-###How did the feature(s) of interest vary with other features in the dataset?
+### Talk about some of the relationships you observed in this part of the investigation.
+### How did the feature(s) of interest vary with other features in the dataset?
 No single variable has a strong correlation with quality, the highest correlation with feature of interest i.e quality is with alcohol (0.44) and with density (-0.31).
 
-###Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
+### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 The most interesting relationship i found is with density and residual.sugar and alcohol. After googling, I found that in the fermentation process yeast breaks down sugar into alcohol i.e the more sugar lesser alcohol or vice-versa.
 
 pH and acidity also have strong correlation which is to be expected as the higher acids have lower pH
@@ -388,7 +388,7 @@ Positive relationship :
 Negative relationship :
   alcohol~density <- -0.78
   
-#Statistical model:
+# Statistical model:
 
 Decision tree seems to be best choice for this dataset. In this model we will keep rating
 as our dependent variable and rest of the features are independent variable.
